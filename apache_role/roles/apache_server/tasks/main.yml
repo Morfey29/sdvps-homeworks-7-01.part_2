@@ -1,0 +1,75 @@
+# roles/apache_server/tasks/main.yml
+---
+- name: Gather system facts
+  ansible.builtin.setup:
+    gather_subset:
+      - hardware
+      - network
+      - virtual
+
+- name: Install Apache web server
+  ansible.builtin.package:
+    name: "{{ apache_package_name }}"
+    state: present
+  notify: restart apache
+
+- name: Ensure Apache is running and enabled
+  ansible.builtin.systemd:
+    name: "{{ apache_service_name }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Configure firewall to allow Apache port
+  ansible.builtin.firewalld:
+    port: "{{ apache_port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: ansible_os_family == "RedHat"
+
+- name: Configure firewall (Ubuntu/Debian)
+  community.general.ufw:
+    rule: allow
+    port: "{{ apache_port }}"
+    proto: tcp
+  when: ansible_os_family == "Debian"
+
+- name: Create custom index.html from template
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ web_root }}/index.html"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart apache
+
+- name: Ensure proper permissions on web root
+  ansible.builtin.file:
+    path: "{{ web_root }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+    recurse: yes
+
+- name: Wait for Apache to start
+  ansible.builtin.wait_for:
+    port: "{{ apache_port }}"
+    delay: 5
+    timeout: 30
+
+- name: Test website availability
+  ansible.builtin.uri:
+    url: "http://localhost:{{ apache_port }}/"
+    method: GET
+    status_code: 200
+    timeout: 10
+  register: website_test
+  until: website_test.status == 200
+  retries: 5
+  delay: 3
+
+- name: Display website test result
+  ansible.builtin.debug:
+    msg: "Веб-сайт успешно доступен. Статус: {{ website_test.status }}"

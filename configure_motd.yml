@@ -1,0 +1,46 @@
+# configure_motd.yml
+---
+- name: Configure MOTD with custom message
+  hosts: all
+  become: yes
+  vars:
+    motd_message: "Добро пожаловать на сервер! Система обслуживается с помощью Ansible."
+
+  tasks:
+    - name: Create custom MOTD file
+      ansible.builtin.copy:
+        content: |
+          ###########################################
+          # {{ motd_message }}
+          # 
+          # Сервер: {{ ansible_hostname }}
+          # ОС: {{ ansible_distribution }} {{ ansible_distribution_version }}
+          # Дата: {{ ansible_date_time.iso8601 }}
+          ###########################################
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Remove dynamic MOTD components (Ubuntu/Debian)
+      ansible.builtin.file:
+        path: /etc/update-motd.d
+        state: absent
+      when: ansible_os_family == "Debian"
+
+    - name: Disable dynamic MOTD (Ubuntu/Debian)
+      ansible.builtin.lineinfile:
+        path: /etc/pam.d/sshd
+        regexp: '^session.*pam_motd\.so.*motd=/run/motd\.dynamic'
+        line: '#session    optional     pam_motd.so  motd=/run/motd.dynamic noupdate'
+        backrefs: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Display MOTD content
+      ansible.builtin.command: cat /etc/motd
+      register: motd_content
+      changed_when: false
+
+    - name: Show new MOTD
+      ansible.builtin.debug:
+        msg: "Новый MOTD установлен:\n{{ motd_content.stdout }}"

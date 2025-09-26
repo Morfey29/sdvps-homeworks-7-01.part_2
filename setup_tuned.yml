@@ -1,0 +1,55 @@
+# setup_tuned.yml
+---
+- name: Install and configure tuned
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update package cache (for apt-based systems)
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_pkg_mgr == 'apt'
+
+    - name: Update package cache (for yum-based systems)
+      ansible.builtin.yum:
+        update_cache: yes
+      when: ansible_pkg_mgr == 'yum'
+
+    - name: Update package cache (for dnf-based systems)
+      ansible.builtin.dnf:
+        update_cache: yes
+      when: ansible_pkg_mgr == 'dnf'
+
+    - name: Install tuned package
+      ansible.builtin.package:
+        name: tuned
+        state: present
+
+    - name: Start tuned service
+      ansible.builtin.systemd:
+        name: tuned
+        state: started
+        enabled: yes
+        daemon_reload: yes
+
+    - name: Enable and start tuned-profile service (for RHEL/CentOS 8+)
+      ansible.builtin.systemd:
+        name: tuned-profile
+        state: started
+        enabled: yes
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 8
+
+    - name: Verify tuned service status
+      ansible.builtin.systemd:
+        name: tuned
+        state: started
+        enabled: yes
+
+    - name: Display tuned status
+      ansible.builtin.command: tuned-adm active
+      register: tuned_status
+      changed_when: false
+
+    - name: Show tuned status
+      ansible.builtin.debug:
+        msg: "{{ tuned_status.stdout }}"

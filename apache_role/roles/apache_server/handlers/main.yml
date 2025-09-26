@@ -1,0 +1,7 @@
+# roles/apache_server/handlers/main.yml
+---
+- name: restart apache
+  ansible.builtin.systemd:
+    name: "{{ apache_service_name }}"
+    state: restarted
+    daemon_reload: yes

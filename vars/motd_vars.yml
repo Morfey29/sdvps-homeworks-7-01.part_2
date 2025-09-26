@@ -1,0 +1,4 @@
+# vars/motd_vars.yml
+motd_message: "🚀 Добро пожаловать на оптимизированный сервер!"
+company_name: "Моя Компания"
+support_contact: "support@company.com"

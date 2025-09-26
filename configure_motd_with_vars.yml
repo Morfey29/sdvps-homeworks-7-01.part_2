@@ -1,0 +1,16 @@
+# configure_motd_with_vars.yml
+---
+- name: Configure MOTD using external variables
+  hosts: all
+  become: yes
+  vars_files:
+    - vars/motd_vars.yml
+
+  tasks:
+    - name: Create custom MOTD with variables
+      ansible.builtin.template:
+        src: motd.j2
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'

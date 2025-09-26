@@ -1,0 +1,50 @@
+# install_kafka.yml
+---
+- name: Download and extract Apache Kafka
+  hosts: all
+  become: yes
+  vars:
+    kafka_version: "3.6.1"
+    kafka_scala_version: "2.13"
+    install_dir: "/opt/kafka"
+    download_url: "https://downloads.apache.org/kafka/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
+
+  tasks:
+    - name: Create installation directory
+      ansible.builtin.file:
+        path: "{{ install_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Download Kafka archive
+      ansible.builtin.get_url:
+        url: "{{ download_url }}"
+        dest: "/tmp/kafka.tgz"
+        checksum: "sha512:https://downloads.apache.org/kafka/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz.sha512"
+        timeout: 60
+
+    - name: Extract Kafka archive
+      ansible.builtin.unarchive:
+        src: "/tmp/kafka.tgz"
+        dest: "{{ install_dir }}"
+        remote_src: yes
+        extra_opts: ["--strip-components=1"]
+        creates: "{{ install_dir }}/bin"
+
+    - name: Set ownership of Kafka directory
+      ansible.builtin.file:
+        path: "{{ install_dir }}"
+        owner: root
+        group: root
+        recurse: yes
+
+    - name: Clean up temporary archive
+      ansible.builtin.file:
+        path: "/tmp/kafka.tgz"
+        state: absent
+
+    - name: Display installation info
+      ansible.builtin.debug:
+        msg: "Kafka {{ kafka_version }} successfully installed to {{ install_dir }}"
