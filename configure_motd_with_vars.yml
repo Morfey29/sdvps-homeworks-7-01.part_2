@@ -14,3 +14,16 @@
         owner: root
         group: root
         mode: '0644'
+   
+    - name: Reload SSH service to apply new MOTD
+      ansible.builtin.systemd:
+        name: ssh
+        state: reloaded
+
+    - name: Verify MOTD is readable
+      ansible.builtin.command: cat /etc/motd
+      register: motd_check
+    
+    - name: Display current MOTD
+      ansible.builtin.debug:
+        msg: "Текущий MOTD:\n{{ motd_check.stdout }}"
