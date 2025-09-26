@@ -1,0 +1,18 @@
+morfey@compute-vm-2-2-20-ssd-1758734911005:~/sdvps-homeworks-7-01.part_2-main$ ansible-playbook -i hosts.ini configure_motd_with_vars_2.yml | tee "configure_motd_wi
+th_vars_2_$(date +%Y%m%d_%H%M%S).log"
+
+PLAY [Configure MOTD using external variables] *********************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [Create custom MOTD with variables] ***************************************
+An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ansible.errors.AnsibleUndefinedVariable: 'motd_greeting' is undefined. 'motd_greeting' is undefined
+fatal: [Ex1]: FAILED! => {"changed": false, "msg": "AnsibleUndefinedVariable: 'motd_greeting' is undefined. 'motd_greeting' is undefined"}
+An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ansible.errors.AnsibleUndefinedVariable: 'motd_greeting' is undefined. 'motd_greeting' is undefined
+fatal: [Ex2]: FAILED! => {"changed": false, "msg": "AnsibleUndefinedVariable: 'motd_greeting' is undefined. 'motd_greeting' is undefined"}
+
+PLAY RECAP *********************************************************************
+Ex1                        : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+Ex2                        : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   

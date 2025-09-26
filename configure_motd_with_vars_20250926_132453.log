@@ -1,0 +1,13 @@
+PLAY [Configure MOTD using external variables] *********************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [Create custom MOTD with variables] ***************************************
+changed: [Ex2]
+changed: [Ex1]
+
+PLAY RECAP *********************************************************************
+Ex1                        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Ex2                        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 

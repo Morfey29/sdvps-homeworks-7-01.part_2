@@ -1,0 +1,58 @@
+
+PLAY [Download and extract Apache Kafka] ***************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [Ex2]
+ok: [10.129.0.33]
+ok: [Ex1]
+ok: [10.129.0.25]
+
+TASK [Create installation directory] *******************************************
+ok: [10.129.0.33]
+ok: [Ex2]
+ok: [10.129.0.25]
+ok: [Ex1]
+
+TASK [Download Kafka archive] **************************************************
+changed: [10.129.0.33]
+changed: [10.129.0.25]
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [Extract Kafka archive] ***************************************************
+changed: [Ex1]
+changed: [10.129.0.25]
+changed: [10.129.0.33]
+changed: [Ex2]
+
+TASK [Set ownership of Kafka directory] ****************************************
+ok: [10.129.0.25]
+ok: [10.129.0.33]
+ok: [Ex2]
+ok: [Ex1]
+
+TASK [Clean up temporary archive] **********************************************
+ok: [Ex1]
+changed: [10.129.0.25]
+changed: [10.129.0.33]
+ok: [Ex2]
+
+TASK [Display installation info] ***********************************************
+ok: [10.129.0.25] => {
+    "msg": "Kafka 4.1.0 successfully installed to /opt/kafka"
+}
+ok: [10.129.0.33] => {
+    "msg": "Kafka 4.1.0 successfully installed to /opt/kafka"
+}
+ok: [Ex1] => {
+    "msg": "Kafka 4.1.0 successfully installed to /opt/kafka"
+}
+ok: [Ex2] => {
+    "msg": "Kafka 4.1.0 successfully installed to /opt/kafka"
+}
+
+PLAY RECAP *********************************************************************
+10.129.0.25                : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+10.129.0.33                : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Ex1                        : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Ex2                        : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  

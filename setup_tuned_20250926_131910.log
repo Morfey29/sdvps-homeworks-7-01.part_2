@@ -1,0 +1,61 @@
+PLAY [Install and configure tuned] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [10.129.0.25]
+ok: [10.129.0.33]
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [Update package cache (for apt-based systems)] ****************************
+changed: [Ex2]
+changed: [10.129.0.33]
+changed: [Ex1]
+changed: [10.129.0.25]
+
+TASK [Update package cache (for yum-based systems)] ****************************
+skipping: [10.129.0.25]
+skipping: [10.129.0.33]
+skipping: [Ex1]
+skipping: [Ex2]
+
+TASK [Update package cache (for dnf-based systems)] ****************************
+skipping: [10.129.0.25]
+skipping: [10.129.0.33]
+skipping: [Ex1]
+skipping: [Ex2]
+
+TASK [Install tuned package] ***************************************************
+fatal: [10.129.0.33]: FAILED! => {"cache_update_time": 1758892758, "cache_updated": false, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"       install 'tuned=2.21.0-1ubuntu2'' failed: E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 5350 (apt-get)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "rc": 100, "stderr": "E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 5350 (apt-get)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "stderr_lines": ["E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 5350 (apt-get)", "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?"], "stdout": "", "stdout_lines": []}
+fatal: [Ex1]: FAILED! => {"cache_update_time": 1758892780, "cache_updated": false, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"       install 'tuned=2.21.0-1ubuntu2'' failed: E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 6985 (apt-get)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "rc": 100, "stderr": "E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 6985 (apt-get)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "stderr_lines": ["E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 6985 (apt-get)", "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?"], "stdout": "", "stdout_lines": []}
+changed: [Ex2]
+changed: [10.129.0.25]
+
+TASK [Start tuned service] *****************************************************
+ok: [Ex2]
+ok: [10.129.0.25]
+
+TASK [Enable and start tuned-profile service (for RHEL/CentOS 8+)] *************
+skipping: [Ex2]
+skipping: [10.129.0.25]
+
+TASK [Verify tuned service status] *********************************************
+ok: [Ex2]
+ok: [10.129.0.25]
+
+TASK [Display tuned status] ****************************************************
+ok: [Ex2]
+ok: [10.129.0.25]
+
+TASK [Show tuned status] *******************************************************
+ok: [10.129.0.25] => {
+    "msg": "Current active profile: virtual-guest"
+}
+ok: [Ex2] => {
+    "msg": "Current active profile: virtual-guest"
+}
+
+PLAY RECAP *********************************************************************
+10.129.0.25                : ok=7    changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+10.129.0.33                : ok=2    changed=1    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+Ex1                        : ok=2    changed=1    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
+Ex2                        : ok=7    changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0  
