@@ -1,7 +1,7 @@
 # playbook.yml
 ---
 - name: Deploy Apache web server with system info
-  hosts: webservers
+  hosts: serv
   become: yes
   roles:
     - role: apache_server
