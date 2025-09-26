@@ -1,0 +1,6 @@
+---
+apache_package_name: "httpd"
+apache_service_name: "httpd"
+apache_port: 80
+web_root: "/var/www/html"
+custom_title: "Системная информация сервера"
