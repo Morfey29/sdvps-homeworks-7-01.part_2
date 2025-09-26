@@ -1,0 +1,55 @@
+ansible-playbook -i ./apache_server/hosts.ini ./apache_server/playbook.yml | tee "web_serv_deploy_log$(date +%Y%m%d_%H%M%S).log"
+
+PLAY [Deploy Apache web server with system info] *******************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Gather system facts] *************************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Install Apache web server] *******************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Ensure Apache is running and enabled] ********************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Allow HTTP traffic on port 80 via iptables] **************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Save iptables rules] *************************************
+changed: [Ex1]
+changed: [Ex2]
+
+TASK [apache_server : Create custom index.html from template] ******************
+changed: [Ex1]
+changed: [Ex2]
+
+TASK [apache_server : Ensure proper permissions on web root] *******************
+changed: [Ex1]
+changed: [Ex2]
+
+TASK [apache_server : Wait for Apache to start] ********************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Test website availability] *******************************
+ok: [Ex1]
+ok: [Ex2]
+
+TASK [apache_server : Display website test result] *****************************
+ok: [Ex1] => {
+    "msg": "Веб-сайт успешно доступен. Статус: 200"
+}
+ok: [Ex2] => {
+    "msg": "Веб-сайт успешно доступен. Статус: 200"
+}
+
+PLAY RECAP *********************************************************************
+Ex1                        : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+Ex2                        : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

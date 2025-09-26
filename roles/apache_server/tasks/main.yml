@@ -16,26 +16,9 @@
     state: started
     enabled: yes
 
-- name: Check if community.general collection is installed
-  ansible.builtin.stat:
-    path: "{{ ansible_collections_path }}/community/general"
-  register: collection_check
-
-- name: Install collections from requirements file
-  ansible.builtin.galaxy_collection:
-    requirements_file: collections/requirements.yml
-    state: present
-  when: not collection_check.stat.exists
-
-- name: Configure firewall for Apache
-  community.general.ufw:
-    rule: allow
-    port: "{{ apache_port | default(80) }}"
-    proto: tcp
-
 - name: Create custom index.html from template
   ansible.builtin.template:
-    src: index.html.j2
+    src: templates/index.html.j2
     dest: "{{ web_root }}/index.html"
     owner: root
     group: root
