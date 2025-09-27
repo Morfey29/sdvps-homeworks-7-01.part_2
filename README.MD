@@ -21,7 +21,8 @@
 1. Скачать какой-либо архив, создать папку для распаковки и распаковать скаченный архив. Например, можете использовать [официальный сайт](https://kafka.apache.org/downloads) и зеркало Apache Kafka. При этом можно скачать как исходный код, так и бинарные файлы, запакованные в архив — в нашем задании не принципиально.
 
 playbook
-'''YAML
+
+```YAML
 # install_kafka.yml
 ---
 - name: Download and extract Apache Kafka
@@ -71,11 +72,11 @@ playbook
     - name: Display installation info
       ansible.builtin.debug:
         msg: "Kafka {{ kafka_version }} successfully installed to {{ install_dir }}"
-'''
+```
 
 output log
 
-'''
+```
 
 PLAY [Download and extract Apache Kafka] ***************************************
 
@@ -134,12 +135,12 @@ PLAY RECAP *********************************************************************
 10.129.0.33                : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 Ex1                        : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 Ex2                        : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
-'''
+```
 
 2. Установить пакет tuned из стандартного репозитория вашей ОС. Запустить его, как демон — конфигурационный файл systemd появится автоматически при установке. Добавить tuned в автозагрузку.
 
 playbook
-'''YAML
+```YAML
 # setup_tuned.yml
 ---
 - name: Install and configure tuned
@@ -195,11 +196,11 @@ playbook
     - name: Show tuned status
       ansible.builtin.debug:
         msg: "{{ tuned_status.stdout }}"
-'''
+```
 
 output log
 
-'''
+```
 PLAY [Install and configure tuned] *********************************************
 
 TASK [Gathering Facts] *********************************************************
@@ -261,12 +262,12 @@ PLAY RECAP *********************************************************************
 10.129.0.33                : ok=2    changed=1    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
 Ex1                        : ok=2    changed=1    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   
 Ex2                        : ok=7    changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0  
-'''
+```
 
 3. Изменить приветствие системы (motd) при входе на любое другое. Пожалуйста, в этом задании используйте переменную для задания приветствия. Переменную можно задавать любым удобным способом.
 
 playbook
-'''YAML
+```YAML
 # configure_motd_with_vars.yml
 ---
 - name: Configure MOTD using external variables
@@ -296,11 +297,11 @@ playbook
     - name: Display current MOTD
       ansible.builtin.debug:
         msg: "Текущий MOTD:\n{{ motd_check.stdout }}"
-'''
+```
 
 output log
 
-'''
+```
 PLAY [Configure MOTD using external variables] *********************************
 
 TASK [Gathering Facts] *********************************************************
@@ -314,20 +315,20 @@ changed: [Ex1]
 PLAY RECAP *********************************************************************
 Ex1                        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 Ex2                        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-'''
+```
 
 variables
 
-'''YAML
+```YAML
 # vars/motd_vars.yml
 motd_message: "🚀 Добро пожаловать на оптимизированный сервер!"
 company_name: "Моя Компания"
 support_contact: "support@company.com"
-'''
+```
 
 template
 
-'''YAML
+```YAML
 ##################################################
 # {{ motd_message }}
 #
@@ -337,10 +338,10 @@ template
 # Контакт поддержки: {{ support_contact }}
 # Дата обновления: {{ ansible_date_time.iso8601 }}
 ##################################################
-'''
+```
 
 screenshot
-
+[Скриншот-1](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img1.png)
 
 ### Задание 2
 
@@ -349,7 +350,7 @@ screenshot
 Модифицируйте плейбук из пункта 3, задания 1. В качестве приветствия он должен установить IP-адрес и hostname управляемого хоста, пожелание хорошего дня системному администратору.
 
 modified template
-'''YAML
+```YAML
 ##################################################
 |
           ╔═════════════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -373,9 +374,10 @@ modified template
           "Хорошего дня, системный администратор! 🚀"
           ════════════════════════════════════════════════════════════════
 ##################################################
-'''
+```
 
 screenshot
+[Скриншот-2](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img2.png)
 
 
 ### Задание 3
@@ -396,7 +398,7 @@ screenshot
 - предоставьте плейбук, использующий роль;
 
 playbook
-'''YAML
+```YAML
 # playbook.yml
 ---
 - name: Deploy Apache web server with system info
@@ -404,18 +406,18 @@ playbook
   become: yes
   roles:
     - role: apache_server
-'''
+```
 
 - разместите архив созданной роли у себя на Google диске и приложите ссылку на роль в своём решении;
-'''
+```
 https://drive.google.com/file/d/1zmdyXENwMGpnGYN6irKCC_nyjlkCEBxW/view?usp=sharing
-'''
+```
 
 - предоставьте скриншоты выполнения плейбука;
 
 output log
 
-'''
+```
 ansible-playbook -i ./apache_server/hosts.ini ./apache_server/playbook.yml | tee "web_serv_deploy_log$(date +%Y%m%d_%H%M%S).log"
 
 PLAY [Deploy Apache web server with system info] *******************************
@@ -471,12 +473,13 @@ ok: [Ex2] => {
 PLAY RECAP *********************************************************************
 Ex1                        : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 Ex2                        : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-'''
+```
 
 screenshot
-
+[Скриншот-3](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img3.png)
 
 
 - предоставьте скриншот браузера, отображающего сконфигурированный index.html в качестве сайта.
 
 screenshot
+![Скриншот-4](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img4.png)
