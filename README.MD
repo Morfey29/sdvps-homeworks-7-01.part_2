@@ -341,7 +341,8 @@ template
 ```
 
 screenshot
-[Скриншот-1](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img1.png)
+
+![Скриншот-1](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/blob/main/img/img1.png)
 
 ### Задание 2
 
@@ -377,8 +378,8 @@ modified template
 ```
 
 screenshot
-[Скриншот-2](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img2.png)
 
+![Скриншот-2](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/blob/main/img/img2.png)
 
 ### Задание 3
 
@@ -476,10 +477,12 @@ Ex2                        : ok=11   changed=3    unreachable=0    failed=0    s
 ```
 
 screenshot
-[Скриншот-3](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img3.png)
+
+![Скриншот-3](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/blob/main/img/img3.png)
 
 
 - предоставьте скриншот браузера, отображающего сконфигурированный index.html в качестве сайта.
 
 screenshot
-![Скриншот-4](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/edit/main/README.MD#:~:text=img4.png)
+
+![Скриншот-4](https://github.com/Morfey29/sdvps-homeworks-7-01.part_2/blob/main/img/img4.png)
